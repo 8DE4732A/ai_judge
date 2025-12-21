@@ -1,0 +1,23 @@
+# Android Studio
+.idea/
+.gradle/
+local.properties
+captures/
+.DS_Store
+gradle/
+gradlew
+gradlew.bat
+# Build files
+build/
+*.apk
+*.aab
+
+# Keystore files
+*.jks
+*.keystore
+
+# Log files
+*.log
+
+# C/C++ files
+.cxx/

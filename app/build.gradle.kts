@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
     packaging {
         resources {
@@ -62,8 +62,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     
-    // Sherpa-onnx
-    implementation("com.k2fsa.sherpa.onnx:sherpa-onnx:1.10.30")
+    // Sherpa-onnx (Manual AAR)
+    implementation(files("libs/sherpa-onnx.aar"))
     
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
