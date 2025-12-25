@@ -5,7 +5,7 @@ AI Judge is an Android application that acts as an unbiased, conversational obse
 ## Screenshots
 
 <p align="center">
-  <img src="mian.png" width="300" title="Main Chat Screen">
+  <img src="main.png" width="300" title="Main Chat Screen">
   <img src="setting.png" width="300" title="Settings Screen">
 </p>
 
