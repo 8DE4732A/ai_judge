@@ -4,9 +4,9 @@
 local.properties
 captures/
 .DS_Store
-gradle/
-gradlew
-gradlew.bat
+#gradle/
+#gradlew
+#gradlew.bat
 # Build files
 build/
 *.apk
