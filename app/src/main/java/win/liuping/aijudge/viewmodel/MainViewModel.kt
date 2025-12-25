@@ -32,6 +32,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _isListening = MutableStateFlow(false)
     val isListening: StateFlow<Boolean> = _isListening.asStateFlow()
 
+    private val _isJudging = MutableStateFlow(false)
+    val isJudging: StateFlow<Boolean> = _isJudging.asStateFlow()
+
     private val sttManager = SttManager(application)
     private val ttsManager = TtsManager(application)
     private val llmRepository = win.liuping.aijudge.data.repository.LlmRepository()
@@ -103,8 +106,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun processJudgeResponse() {
+    fun requestJudge() {
+        if (_isJudging.value) return
+
         viewModelScope.launch {
+            _isJudging.value = true
             val currentSettings = _settings.value
             // Build conversation history
             val chatMessages = mutableListOf<win.liuping.aijudge.data.network.model.ChatMessage>()
@@ -125,6 +131,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             
             val response = llmRepository.getJudgeResponse(chatMessages, currentSettings)
             addMessage(response, Sender.JUDGE)
+            _isJudging.value = false
         }
     }
 
@@ -203,7 +210,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         if (isEndpoint) {
                             Log.d("MainViewModel", "Endpoint detected, processing: $text")
                             currentMessageId = null
-                            processJudgeResponse()
+                            // processJudgeResponse() // Removed auto-trigger
                         }
                     }
                 }

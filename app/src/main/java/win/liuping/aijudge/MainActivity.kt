@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -22,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -46,6 +50,7 @@ class MainActivity : ComponentActivity() {
                 val messages by viewModel.messages.collectAsState()
                 val settings by viewModel.settings.collectAsState()
                 val isListening by viewModel.isListening.collectAsState()
+                val isJudging by viewModel.isJudging.collectAsState()
                 val sttDownloadStatus by viewModel.sttDownloadStatus.collectAsState()
                 val ttsDownloadStatus by viewModel.ttsDownloadStatus.collectAsState()
 
@@ -98,24 +103,37 @@ class MainActivity : ComponentActivity() {
                     },
                     floatingActionButton = {
                         if (currentRoute == "chat") {
-                            FloatingActionButton(
-                                onClick = {
-                                    if (isListening) {
-                                        viewModel.toggleListening()
-                                    } else {
-                                        if (androidx.core.content.ContextCompat.checkSelfPermission(
-                                                context,
-                                                android.Manifest.permission.RECORD_AUDIO
-                                            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                                        ) {
+                            Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
+                                if (!isListening) {
+                                    FloatingActionButton(
+                                        onClick = { viewModel.requestJudge() },
+                                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                        contentColor = MaterialTheme.colorScheme.secondary
+                                    ) {
+                                        Text(if (isJudging) "..." else stringResource(R.string.btn_judge))
+                                    }
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
+                                
+                                FloatingActionButton(
+                                    onClick = {
+                                        if (isListening) {
                                             viewModel.toggleListening()
                                         } else {
-                                            permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                                            if (androidx.core.content.ContextCompat.checkSelfPermission(
+                                                    context,
+                                                    android.Manifest.permission.RECORD_AUDIO
+                                                ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                                            ) {
+                                                viewModel.toggleListening()
+                                            } else {
+                                                permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                                            }
                                         }
-                                    }
-                                },
-                            ) {
-                                Text(if (isListening) stringResource(R.string.btn_stop) else stringResource(R.string.btn_listen))
+                                    },
+                                ) {
+                                    Text(if (isListening) stringResource(R.string.btn_stop) else stringResource(R.string.btn_listen))
+                                }
                             }
                         }
                     }

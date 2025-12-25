@@ -6,6 +6,7 @@
     <string name="mic_permission_denied">Microphone permission denied</string>
     <string name="btn_stop">STOP</string>
     <string name="btn_listen">LISTEN</string>
+    <string name="btn_judge">JUDGE</string>
     
     <!-- Settings Screen -->
     <string name="llm_settings_header">LLM Settings</string>

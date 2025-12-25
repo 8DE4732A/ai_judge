@@ -6,6 +6,7 @@
     <string name="mic_permission_denied">麦克风权限被拒绝</string>
     <string name="btn_stop">停止</string>
     <string name="btn_listen">开始监听</string>
+    <string name="btn_judge">判官</string>
     
     <!-- Settings Screen -->
     <string name="llm_settings_header">LLM 设置</string>
