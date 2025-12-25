@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">AI Judge</string>
+    <string name="settings_title">设置</string>
+    <string name="cd_settings">设置</string>
+    <string name="cd_back">返回</string>
+    <string name="mic_permission_denied">麦克风权限被拒绝</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_listen">开始监听</string>
+    
+    <!-- Settings Screen -->
+    <string name="llm_settings_header">LLM 设置</string>
+    <string name="label_llm_provider">LLM 提供商</string>
+    <string name="label_api_key">API 密钥</string>
+    <string name="label_api_endpoint">API 端点</string>
+    <string name="label_api_endpoint_default">API 端点 (默认)</string>
+    <string name="label_model_name">模型名称</string>
+    <string name="label_system_prompt">系统提示词</string>
+    <string name="label_timeout_seconds">超时时间 (秒)</string>
+    
+    <string name="speech_models_header">语音模型</string>
+    <string name="stt_model_status_prefix">STT 模型: %s</string>
+    <string name="tts_model_status_prefix">TTS 模型: %s</string>
+    <string name="status_downloaded">已下载</string>
+    <string name="status_not_downloaded">未下载</string>
+    <string name="msg_download_complete">下载完成!</string>
+    
+    <string name="btn_download_stt">下载 STT 模型</string>
+    <string name="btn_download_tts">下载 TTS 模型</string>
+    <string name="btn_save_settings">保存设置</string>
+    
+    <!-- ViewModel Messages -->
+    <string name="msg_welcome">欢迎使用 AI Judge。请检查设置并开始监听。</string>
+    <string name="msg_stt_not_ready">STT 模型未就绪。请检查设置。</string>
+    <string name="msg_listening_started">开始监听...</string>
+    <string name="msg_listening_stopped">停止监听。</string>
+</resources>
