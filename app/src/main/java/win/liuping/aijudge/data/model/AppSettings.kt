@@ -7,7 +7,8 @@ data class AppSettings(
     val sttModelPath: String = "", // Path or identifier for Sherpa model
     val ttsModelPath: String = "",
     val systemPrompt: String = "You are an AI Judge. You listen to the environment and give short, witty judgments.",
-    val llmProvider: LlmProvider = LlmProvider.OPENAI
+    val llmProvider: LlmProvider = LlmProvider.OPENAI,
+    val llmTimeoutSeconds: Long = 60
 )
 
 enum class LlmProvider(val displayName: String, val defaultEndpoint: String, val defaultModel: String) {

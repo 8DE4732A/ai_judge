@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">AI Judge</string>
+    <string name="settings_title">Settings</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_back">Back</string>
+    <string name="mic_permission_denied">Microphone permission denied</string>
+    <string name="btn_stop">STOP</string>
+    <string name="btn_listen">LISTEN</string>
+    
+    <!-- Settings Screen -->
+    <string name="llm_settings_header">LLM Settings</string>
+    <string name="label_llm_provider">LLM Provider</string>
+    <string name="label_api_key">API Key</string>
+    <string name="label_api_endpoint">API Endpoint</string>
+    <string name="label_api_endpoint_default">API Endpoint (Default)</string>
+    <string name="label_model_name">Model Name</string>
+    <string name="label_system_prompt">System Prompt</string>
+    <string name="label_timeout_seconds">Timeout (seconds)</string>
+    
+    <string name="speech_models_header">Speech Models</string>
+    <string name="stt_model_status_prefix">STT Model: %s</string>
+    <string name="tts_model_status_prefix">TTS Model: %s</string>
+    <string name="status_downloaded">Downloaded</string>
+    <string name="status_not_downloaded">Not Downloaded</string>
+    <string name="msg_download_complete">Download Complete!</string>
+    
+    <string name="btn_download_stt">Download STT Model</string>
+    <string name="btn_download_tts">Download TTS Model</string>
+    <string name="btn_save_settings">Save Settings</string>
+    
+    <!-- ViewModel Messages -->
+    <string name="msg_welcome">Welcome to AI Judge. Please check settings and start listening.</string>
+    <string name="msg_stt_not_ready">STT models are not ready. Please check Settings.</string>
+    <string name="msg_listening_started">Started listening...</string>
+    <string name="msg_listening_stopped">Stopped listening.</string>
 </resources>

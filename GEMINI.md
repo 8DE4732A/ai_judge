@@ -45,8 +45,8 @@ The application requires pre-trained ONNX models for STT and TTS.
 
 1.  **Automatic Download:** The app includes a `ModelDownloadManager` that attempts to download models from Hugging Face to the app's internal storage (`filesDir/stt-model` and `filesDir/tts-model`) upon initialization or user trigger.
 2.  **Manual Setup:** If automatic download fails, you can manually push models to the device:
-    *   **STT Path:** `/data/data/com.example.aijudge/files/stt-model/` containing `encoder-*.onnx`, `decoder-*.onnx`, `joiner-*.onnx`, `tokens.txt`.
-    *   **TTS Path:** `/data/data/com.example.aijudge/files/tts-model/` containing `vits-*.onnx`, `tokens.txt`, `lexicon.txt`, `rule.fst`.
+    *   **STT Path:** `/data/data/win.liuping.aijudge/files/stt-model/` containing `encoder-*.onnx`, `decoder-*.onnx`, `joiner-*.onnx`, `tokens.txt`.
+    *   **TTS Path:** `/data/data/win.liuping.aijudge/files/tts-model/` containing `vits-*.onnx`, `tokens.txt`, `lexicon.txt`, `rule.fst`.
 
 ### Configuration
 1.  Open the app and navigate to **Settings**.
@@ -55,11 +55,11 @@ The application requires pre-trained ONNX models for STT and TTS.
 
 ## Key Files and Components
 
-*   **`app/src/main/java/com/example/aijudge/MainViewModel.kt`**: The core orchestrator. Manages application state (`_messages`, `_isListening`), handles audio recording toggles, triggers model downloads, and coordinates the flow between STT -> LLM -> TTS.
-*   **`app/src/main/java/com/example/aijudge/speech/SttManager.kt`**: Wraps `Sherpa-onnx`'s `OnlineRecognizer`. Handles microphone input and streaming transcription.
-*   **`app/src/main/java/com/example/aijudge/speech/TtsManager.kt`**: Wraps `Sherpa-onnx`'s TTS engine. Converts LLM text responses to audio.
-*   **`app/src/main/java/com/example/aijudge/data/network/LlmApi.kt`**: Retrofit interface for the Chat Completion API.
-*   **`app/src/main/java/com/example/aijudge/util/ModelDownloadManager.kt`**: Handles downloading model files from Hugging Face URLs defined in constants.
+*   **`app/src/main/java/win/liuping/aijudge/MainViewModel.kt`**: The core orchestrator. Manages application state (`_messages`, `_isListening`), handles audio recording toggles, triggers model downloads, and coordinates the flow between STT -> LLM -> TTS.
+*   **`app/src/main/java/win/liuping/aijudge/speech/SttManager.kt`**: Wraps `Sherpa-onnx`'s `OnlineRecognizer`. Handles microphone input and streaming transcription.
+*   **`app/src/main/java/win/liuping/aijudge/speech/TtsManager.kt`**: Wraps `Sherpa-onnx`'s TTS engine. Converts LLM text responses to audio.
+*   **`app/src/main/java/win/liuping/aijudge/data/network/LlmApi.kt`**: Retrofit interface for the Chat Completion API.
+*   **`app/src/main/java/win/liuping/aijudge/util/ModelDownloadManager.kt`**: Handles downloading model files from Hugging Face URLs defined in constants.
 
 ## Development Conventions
 

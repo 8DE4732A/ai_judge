@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.aijudge"
+    namespace = "win.liuping.aijudge"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.aijudge"
+        applicationId = "win.liuping.aijudge"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

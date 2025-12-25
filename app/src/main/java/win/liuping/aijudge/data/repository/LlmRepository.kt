@@ -7,18 +7,35 @@ import win.liuping.aijudge.data.network.model.ChatCompletionRequest
 import win.liuping.aijudge.data.network.model.ChatMessage
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import okhttp3.OkHttpClient
 
 class LlmRepository {
 
-    private val api: LlmApi
+    private var currentApi: LlmApi? = null
+    private var currentTimeout: Long = -1
 
-    init {
-        // Base URL doesn't matter much as we pass @Url, but Retrofit needs one.
+    private fun getApi(timeoutSeconds: Long): LlmApi {
+        if (currentApi != null && currentTimeout == timeoutSeconds) {
+            return currentApi!!
+        }
+
+        val client = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS) // Default connect timeout
+            .readTimeout(timeoutSeconds, TimeUnit.SECONDS)
+            .writeTimeout(timeoutSeconds, TimeUnit.SECONDS)
+            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.openai.com/") 
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        api = retrofit.create(LlmApi::class.java)
+        
+        val newApi = retrofit.create(LlmApi::class.java)
+        currentApi = newApi
+        currentTimeout = timeoutSeconds
+        return newApi
     }
 
     suspend fun getJudgeResponse(
@@ -26,6 +43,8 @@ class LlmRepository {
         settings: AppSettings
     ): String {
         return try {
+            val api = getApi(settings.llmTimeoutSeconds)
+
             val url = if (settings.llmEndpoint.endsWith("/")) {
                 settings.llmEndpoint + "chat/completions"
             } else {

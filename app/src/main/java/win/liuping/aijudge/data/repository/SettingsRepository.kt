@@ -17,6 +17,7 @@ class SettingsRepository(context: Context) {
             putString("ttsModelPath", settings.ttsModelPath)
             putString("systemPrompt", settings.systemPrompt)
             putString("llmProvider", settings.llmProvider.name)
+            putLong("llmTimeoutSeconds", settings.llmTimeoutSeconds)
         }
     }
 
@@ -32,7 +33,8 @@ class SettingsRepository(context: Context) {
                 LlmProvider.valueOf(prefs.getString("llmProvider", LlmProvider.OPENAI.name) ?: LlmProvider.OPENAI.name)
             } catch (e: Exception) {
                 LlmProvider.OPENAI
-            }
+            },
+            llmTimeoutSeconds = prefs.getLong("llmTimeoutSeconds", 60)
         )
     }
 }

@@ -1,46 +1,67 @@
 # AI Judge (AI 判官)
 
-AI Judge is an Android application that acts as an unbiased observer in your environment. It listens to conversations around it, transcribes them using on-device Speech-to-Text (STT), sends the context to an AI "Judge" (LLM), and speaks out the verdict using on-device Text-to-Speech (TTS).
+AI Judge is an Android application that acts as an unbiased, conversational observer. It listens to speech in your environment, transcribes it using on-device Speech-to-Text (STT), consults an AI "Judge" (LLM) for an opinion or verdict, and speaks the response back using on-device Text-to-Speech (TTS).
+
+## Screenshots
+
+<p align="center">
+  <img src="mian.png" width="300" title="Main Chat Screen">
+  <img src="setting.png" width="300" title="Settings Screen">
+</p>
 
 ## Features
 
 - **On-device Speech Recognition**: Powered by [Sherpa-onnx](https://github.com/k2fsa/sherpa-onnx) for real-time, privacy-focused transcription.
-- **AI Judgment**: Integrates with OpenAI-compatible LLM APIs (e.g., GPT-3.5/4) to analyze conversations and provide witty or serious judgments.
+- **AI Judgment**: Integrates with OpenAI-compatible LLM APIs (OpenAI, DeepSeek, Doubao, etc.) to analyze conversations.
 - **Voice Output**: The Judge speaks its verdict aloud using Sherpa-onnx VITS TTS.
-- **Configurable**: reliable Settings screen to customize LLM endpoints, API keys, and system prompts.
-
-## Prerequisites
-
-### 1. Model Files
-This app requires pre-trained ONNX models for speech processing. You must manually download them and place them in the app's assets.
-
-**Location:** `app/src/main/assets/`
-
-**Recommended Models:**
-- **STT**: `sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20` (or similar streaming transducer)
-- **TTS**: `vits-vctk` or other VITS models compatible with Sherpa-onnx.
-
-Ensure the file structure in `assets` matches what is expected by `SttManager` and `TtsManager`.
-
-### 2. LLM API Key
-You need an API Key from an OpenAI-compatible provider (OpenAI, DeepSeek, etc.).
-- Go to App **Settings**.
-- Enter your **API Key**.
-- (Optional) Configure **Endpoint** and **System Prompt**.
-
-## Getting Started
-
-1. Clone this repository.
-2. Open in **Android Studio** (Hedgehog or later recommended).
-3. Download and place the model files in `app/src/main/assets/`.
-4. Sync Gradle project.
-5. Run on an Android device or Emulator (ensure Microphone permission is granted).
-6. Tap **LISTEN** to start the session.
+- **Internationalization**: Full support for English and Chinese (Simplified).
+- **Customizable**: Extensive settings for LLM endpoints, API keys, system prompts, and request timeouts.
+- **Automatic Model Download**: Built-in manager to download required ONNX models directly from Hugging Face.
 
 ## Tech Stack
 
-- **Language**: Kotlin
-- **UI**: Jetpack Compose (Material3)
-- **Architecture**: MVVM
-- **Speech**: Sherpa-onnx (JNI bindings)
-- **Network**: Retrofit
+- **Language**: [Kotlin](https://kotlinlang.org/)
+- **UI**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3
+- **Architecture**: MVVM (Model-View-ViewModel)
+- **Speech Engines**: [Sherpa-onnx](https://github.com/k2fsa/sherpa-onnx) (Streaming STT & VITS TTS)
+- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp
+
+## Getting Started
+
+### 1. Installation
+1. Clone this repository.
+2. Open the project in **Android Studio** (Ladybug or later recommended).
+3. Build and run the app on an Android device (Physical device recommended for microphone performance).
+
+### 2. Model Setup
+The app requires ONNX models for STT and TTS:
+- Navigate to **Settings**.
+- Use the **Download STT Model** and **Download TTS Model** buttons to fetch the models automatically.
+- Alternatively, you can manually place models in the app's internal storage (`/data/data/win.liuping.aijudge/files/`).
+
+### 3. LLM Configuration
+1. Obtain an API Key from an OpenAI-compatible provider.
+2. Open the app **Settings**.
+3. Select your **Provider** or choose **Custom**.
+4. Enter your **API Key** and **Endpoint**.
+5. Adjust the **Timeout** (default 60s) if using slower models.
+
+## Usage
+1. Grant **Microphone** permission when prompted.
+2. Tap the **LISTEN** button on the home screen.
+3. Speak or let the app listen to a conversation.
+4. The app will detect speech endpoints and automatically send the text to the AI Judge.
+5. Tap on any Judge response to hear it again.
+
+## Development
+
+### GitHub Actions
+The project includes a `Manual Release` workflow. You can trigger it from the **Actions** tab to build a release APK and create a GitHub release.
+
+### Build Requirements
+- **JDK**: 17+
+- **Android SDK**: API 34+
+- **Gradle**: 8.2+
+
+## License
+[MIT License](LICENSE)

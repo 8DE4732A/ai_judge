@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import android.util.Log
+import win.liuping.aijudge.R
 import win.liuping.aijudge.data.model.AppSettings
 import win.liuping.aijudge.data.model.Message
 import win.liuping.aijudge.data.model.Sender
@@ -43,7 +44,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         // Add a welcome message
-        addMessage("Welcome to AI Judge. Please check settings and start listening.", Sender.SYSTEM)
+        addMessage(getApplication<Application>().getString(R.string.msg_welcome), Sender.SYSTEM)
         
         // Initialize speech engines (async ideally)
         // Initialize speech engines if models exist
@@ -172,7 +173,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun toggleListening() {
         if (_settings.value.sttModelPath.isBlank() || !sttManager.isReady()) {
-            addMessage("STT models are not ready. Please check Settings.", Sender.SYSTEM)
+            addMessage(getApplication<Application>().getString(R.string.msg_stt_not_ready), Sender.SYSTEM)
             return
         }
 
@@ -207,11 +208,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
             }
-            addMessage("Started listening...", Sender.SYSTEM)
+            addMessage(getApplication<Application>().getString(R.string.msg_listening_started), Sender.SYSTEM)
         } else {
             sttManager.stopListening()
             currentMessageId = null
-            addMessage("Stopped listening.", Sender.SYSTEM)
+            addMessage(getApplication<Application>().getString(R.string.msg_listening_stopped), Sender.SYSTEM)
         }
     }
     

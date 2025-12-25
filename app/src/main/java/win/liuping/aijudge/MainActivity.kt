@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import win.liuping.aijudge.ui.ChatScreen
 import win.liuping.aijudge.ui.SettingsScreen
@@ -38,6 +40,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AIJudgeTheme {
                 val navController = rememberNavController()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+
                 val messages by viewModel.messages.collectAsState()
                 val settings by viewModel.settings.collectAsState()
                 val isListening by viewModel.isListening.collectAsState()
@@ -51,49 +56,67 @@ class MainActivity : ComponentActivity() {
                     if (isGranted) {
                         viewModel.toggleListening()
                     } else {
-                        viewModel.addMessage("Microphone permission denied", win.liuping.aijudge.data.model.Sender.SYSTEM)
+                        viewModel.addMessage(context.getString(R.string.mic_permission_denied), win.liuping.aijudge.data.model.Sender.SYSTEM)
                     }
                 }
 
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text(stringResource(R.string.app_name)) },
+                            title = {
+                                Text(
+                                    if (currentRoute == "settings") stringResource(R.string.settings_title)
+                                    else stringResource(R.string.app_name)
+                                )
+                            },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                                 titleContentColor = MaterialTheme.colorScheme.primary,
                             ),
-                            actions = {
-                                IconButton(onClick = { 
-                                    navController.navigate("settings") {
-                                        launchSingleTop = true
+                            navigationIcon = {
+                                if (currentRoute == "settings") {
+                                    IconButton(onClick = { navController.popBackStack() }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.ArrowBack,
+                                            contentDescription = stringResource(R.string.cd_back)
+                                        )
                                     }
-                                }) {
-                                    Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                                }
+                            },
+                            actions = {
+                                if (currentRoute != "settings") {
+                                    IconButton(onClick = {
+                                        navController.navigate("settings") {
+                                            launchSingleTop = true
+                                        }
+                                    }) {
+                                        Icon(Icons.Filled.Settings, contentDescription = stringResource(R.string.cd_settings))
+                                    }
                                 }
                             }
                         )
                     },
                     floatingActionButton = {
-                        // Only show FAB on Chat screen (home)
-                         FloatingActionButton(
-                            onClick = { 
-                                if (isListening) {
-                                    viewModel.toggleListening()
-                                } else {
-                                    if (androidx.core.content.ContextCompat.checkSelfPermission(
-                                            context,
-                                            android.Manifest.permission.RECORD_AUDIO
-                                        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                                    ) {
+                        if (currentRoute == "chat") {
+                            FloatingActionButton(
+                                onClick = {
+                                    if (isListening) {
                                         viewModel.toggleListening()
                                     } else {
-                                        permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                                        if (androidx.core.content.ContextCompat.checkSelfPermission(
+                                                context,
+                                                android.Manifest.permission.RECORD_AUDIO
+                                            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                                        ) {
+                                            viewModel.toggleListening()
+                                        } else {
+                                            permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                                        }
                                     }
-                                }
-                            },
-                        ) {
-                            Text(if (isListening) "STOP" else "LISTEN")
+                                },
+                            ) {
+                                Text(if (isListening) stringResource(R.string.btn_stop) else stringResource(R.string.btn_listen))
+                            }
                         }
                     }
                 ) { innerPadding ->
