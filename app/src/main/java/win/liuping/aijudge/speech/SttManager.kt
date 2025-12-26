@@ -106,31 +106,23 @@ class SttManager(private val context: Context) {
                 return false
             }
 
-            // Check model file size (should be ~294MB)
+            // Check model file size (int8 model is ~75MB)
             val modelSize = modelFile.length()
-            if (modelSize < 100_000_000) { // Less than 100MB is suspicious
-                Log.e("SttManager", "Punctuation model file too small: $modelSize bytes, expected ~294MB")
+            if (modelSize < 50_000_000) { // Less than 50MB is suspicious
+                Log.e("SttManager", "Punctuation model file too small: $modelSize bytes, expected ~75MB")
                 return false
             }
 
-            // Check for required tokens.json file
-            val tokensFile = java.io.File(modelFile.parentFile, "tokens.json")
-            if (!tokensFile.exists()) {
-                Log.e("SttManager", "Punctuation tokens file not found: ${tokensFile.absolutePath}")
-                return false
-            }
-
-            // Check tokens file size (should be ~4.2MB)
-            val tokensSize = tokensFile.length()
-            if (tokensSize < 1_000_000) { // Less than 1MB is suspicious
-                Log.e("SttManager", "Punctuation tokens file too small: $tokensSize bytes, expected ~4.2MB")
-                return false
-            }
-
-            Log.d("SttManager", "Initializing punctuation with: $modelPath (model: ${modelSize/1024/1024}MB, tokens: ${tokensSize/1024}KB)")
-            val config = OfflinePunctuationConfig(
-                model = OfflinePunctuationModelConfig(ctTransformer = modelPath)
+            // Note: sherpa-onnx only requires model.onnx for punctuation
+            // tokens.json is NOT required according to official documentation
+            Log.d("SttManager", "Initializing punctuation with: $modelPath (model: ${modelSize/1024/1024}MB)")
+            val modelConfig = OfflinePunctuationModelConfig(
+                ctTransformer = modelPath,
+                numThreads = 1,
+                debug = false,
+                provider = "cpu"
             )
+            val config = OfflinePunctuationConfig(model = modelConfig)
             punctuation = OfflinePunctuation(assetManager = null, config = config)
             Log.d("SttManager", "Punctuation initialized")
             true

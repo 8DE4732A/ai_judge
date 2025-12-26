@@ -186,7 +186,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             if (!settingsRepository.shouldSkipModel("punctuation")) {
                 var currentPunctuationPath = _settings.value.punctuationModelPath
                 val punctuationDir = File(context.filesDir, "punctuation-model")
-                val punctuationFile = File(punctuationDir, "model.onnx")
+                val punctuationFile = File(punctuationDir, ModelDownloadManager.PUNCTUATION_MODEL_NAME)
 
                 if (punctuationFile.exists()) {
                      currentPunctuationPath = punctuationFile.absolutePath
@@ -200,10 +200,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     _punctuationLoadStatus.value = if (success) ModelLoadStatus.LOADED else ModelLoadStatus.FAILED
                     if (success) {
                         _settings.update { it.copy(punctuationModelPath = currentPunctuationPath) }
+                    } else {
+                        // Reset crash count so user can try again after fixing the issue
+                        settingsRepository.resetCrashCount("punctuation")
                     }
                 }
             } else {
-                Log.w("MainViewModel", "Skipping Punctuation model due to repeated crashes")
+                Log.w("MainViewModel", "Skipping Punctuation model due to repeated crashes - resetting count")
+                // Auto-reset crash count so next app start will try again
+                settingsRepository.resetCrashCount("punctuation")
                 _punctuationLoadStatus.value = ModelLoadStatus.FAILED
             }
 
@@ -531,15 +536,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 punctuationDir.listFiles()?.forEach { it.delete() }
             }
 
-            ModelDownloadManager.downloadModel(
+            ModelDownloadManager.downloadPunctuationModel(
                 getApplication(),
-                ModelDownloadManager.PUNCTUATION_FILES,
                 "punctuation-model"
             ).collect { status ->
                 _punctuationDownloadStatus.value = status
                 if (status is ModelDownloadManager.DownloadStatus.Completed) {
                     val path = File(getApplication<Application>().filesDir, "punctuation-model").absolutePath
-                    val modelFile = File(path, "model.onnx")
+                    val modelFile = File(path, ModelDownloadManager.PUNCTUATION_MODEL_NAME)
 
                     if (modelFile.exists() && modelFile.length() > 0) {
                         val absPath = modelFile.absolutePath
