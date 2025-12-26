@@ -28,8 +28,18 @@ object ModelDownloadManager {
     val TTS_FILES = mapOf(
         "vits-aishell3.onnx" to "https://huggingface.co/csukuangfj/vits-zh-aishell3/resolve/main/vits-aishell3.onnx",
         "tokens.txt" to "https://huggingface.co/csukuangfj/vits-zh-aishell3/resolve/main/tokens.txt",
-        "lexicon.txt" to "https://huggingface.co/csukuangfj/vits-zh-aishell3/resolve/main/lexicon.txt",
-        "rule.fst" to "https://huggingface.co/csukuangfj/vits-zh-aishell3/resolve/main/rule.fst"
+        "lexicon.txt" to "https://huggingface.co/csukuangfj/vits-zh-aishell3/resolve/main/lexicon.txt"
+    )
+
+    // Speaker Diarization / Embedding Model
+    val DIARIZATION_FILES = mapOf(
+        "speaker_model.onnx" to "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx"
+    )
+
+    // Punctuation Model (CT-Transformer)
+    val PUNCTUATION_FILES = mapOf(
+        "model.onnx" to "https://huggingface.co/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/main/model.onnx",
+        "tokens.json" to "https://huggingface.co/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/main/tokens.json"
     )
 
     sealed class DownloadStatus {

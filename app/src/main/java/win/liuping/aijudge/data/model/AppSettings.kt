@@ -6,9 +6,12 @@ data class AppSettings(
     val llmModel: String = "gpt-3.5-turbo",
     val sttModelPath: String = "", // Path or identifier for Sherpa model
     val ttsModelPath: String = "",
+    val speakerDiarizationModelPath: String = "",
+    val punctuationModelPath: String = "",
     val systemPrompt: String = "You are an AI Judge. You listen to the environment and give short, witty judgments.",
     val llmProvider: LlmProvider = LlmProvider.OPENAI,
-    val llmTimeoutSeconds: Long = 60
+    val llmTimeoutSeconds: Long = 60,
+    val sttEndpointTimeout: Float = 1.5f // Seconds of silence to consider speech ended
 )
 
 enum class LlmProvider(val displayName: String, val defaultEndpoint: String, val defaultModel: String) {
@@ -19,4 +22,11 @@ enum class LlmProvider(val displayName: String, val defaultEndpoint: String, val
     DOUBAO("Doubao", "https://ark.cn-beijing.volces.com/api/v3", "doubao-pro-32k"),
     XIAOMI("Xiaomi", "https://api.siliconflow.cn/v1", "mimo-v2-flash"), // Assumption based on common hosting
     CUSTOM("Custom", "", "")
+}
+
+enum class ModelLoadStatus {
+    NOT_DOWNLOADED,  // Model files not present
+    LOADING,         // Currently loading
+    LOADED,          // Successfully loaded
+    FAILED           // Failed to load
 }

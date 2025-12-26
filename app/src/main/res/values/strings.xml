@@ -7,6 +7,10 @@
     <string name="btn_stop">STOP</string>
     <string name="btn_listen">LISTEN</string>
     <string name="btn_judge">JUDGE</string>
+    <string name="btn_organize">ORGANIZE</string>
+    <string name="cd_organize">Organize Meeting</string>
+    <string name="dialog_title_minutes">Meeting Minutes</string>
+    <string name="btn_close">Close</string>
     
     <!-- Settings Screen -->
     <string name="llm_settings_header">LLM Settings</string>
@@ -17,16 +21,24 @@
     <string name="label_model_name">Model Name</string>
     <string name="label_system_prompt">System Prompt</string>
     <string name="label_timeout_seconds">Timeout (seconds)</string>
+    <string name="label_stt_endpoint_timeout">STT Endpoint Timeout: %.1fs</string>
     
     <string name="speech_models_header">Speech Models</string>
     <string name="stt_model_status_prefix">STT Model: %s</string>
     <string name="tts_model_status_prefix">TTS Model: %s</string>
+    <string name="diarization_model_status_prefix">Diarization Model: %s</string>
+    <string name="punct_model_status_prefix">Punctuation Model: %s</string>
     <string name="status_downloaded">Downloaded</string>
     <string name="status_not_downloaded">Not Downloaded</string>
+    <string name="status_loading">Loading...</string>
+    <string name="status_loaded">Loaded</string>
+    <string name="status_failed">Failed</string>
     <string name="msg_download_complete">Download Complete!</string>
     
     <string name="btn_download_stt">Download STT Model</string>
     <string name="btn_download_tts">Download TTS Model</string>
+    <string name="btn_download_diarization">Download Diarization Model</string>
+    <string name="btn_download_punctuation">Download Punctuation Model</string>
     <string name="btn_save_settings">Save Settings</string>
     
     <!-- ViewModel Messages -->
@@ -34,4 +46,19 @@
     <string name="msg_stt_not_ready">STT models are not ready. Please check Settings.</string>
     <string name="msg_listening_started">Started listening...</string>
     <string name="msg_listening_stopped">Stopped listening.</string>
+
+    <!-- Session Management -->
+    <string name="session_new">New Session</string>
+    <string name="session_list_title">Sessions</string>
+    <string name="session_delete">Delete</string>
+    <string name="session_delete_confirm">Delete this session?</string>
+    <string name="session_empty">No sessions yet</string>
+    <string name="session_untitled">Untitled Session</string>
+
+    <!-- Speaker Aliases -->
+    <string name="speaker_aliases_title">Speaker Aliases</string>
+    <string name="speaker_alias_hint">Enter alias for %s</string>
+    <string name="speaker_no_speakers">No speakers identified yet</string>
+    <string name="btn_done">Done</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>

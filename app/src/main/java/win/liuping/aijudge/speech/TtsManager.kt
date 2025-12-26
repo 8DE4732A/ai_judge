@@ -14,8 +14,8 @@ class TtsManager(private val context: Context) {
     private var tts: OfflineTts? = null
     private var audioTrack: AudioTrack? = null
 
-    fun initTts(modelDir: String) {
-        try {
+    fun initTts(modelDir: String): Boolean {
+        return try {
             Log.d("TtsManager", "Initializing TTS with modelDir: $modelDir")
             val config = OfflineTtsConfig(
                 model = OfflineTtsModelConfig(
@@ -30,8 +30,10 @@ class TtsManager(private val context: Context) {
             )
             tts = OfflineTts(assetManager = null, config = config)
             Log.d("TtsManager", "TTS initialized")
+            true
         } catch (e: Exception) {
             Log.e("TtsManager", "Failed to init TTS", e)
+            false
         }
     }
 

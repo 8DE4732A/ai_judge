@@ -8,7 +8,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,8 +33,12 @@ fun SettingsScreen(
     onSave: (AppSettings) -> Unit,
     sttDownloadStatus: ModelDownloadManager.DownloadStatus?,
     ttsDownloadStatus: ModelDownloadManager.DownloadStatus?,
+    diarizationDownloadStatus: ModelDownloadManager.DownloadStatus?,
+    punctuationDownloadStatus: ModelDownloadManager.DownloadStatus?,
     onDownloadStt: () -> Unit,
     onDownloadTts: () -> Unit,
+    onDownloadDiarization: () -> Unit,
+    onDownloadPunctuation: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var apiKey by remember { mutableStateOf(currentSettings.llmApiKey) }
@@ -132,6 +138,18 @@ fun SettingsScreen(
             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number)
         )
 
+        var endpointTimeout by remember { mutableStateOf(currentSettings.sttEndpointTimeout) }
+        Text(
+            text = stringResource(R.string.label_stt_endpoint_timeout, endpointTimeout),
+            modifier = Modifier.padding(top = 8.dp)
+        )
+        Slider(
+            value = endpointTimeout,
+            onValueChange = { endpointTimeout = it },
+            valueRange = 0.5f..5.0f,
+            steps = 44 // (5.0 - 0.5) / 0.1 = 45 steps -> 44 intervals
+        )
+
         Text(stringResource(R.string.speech_models_header), style = androidx.compose.material3.MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 16.dp))
 
         // STT Download
@@ -167,6 +185,40 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.btn_download_tts))
         }
+
+        // Diarization Download
+        val diarizationStatusText = if (currentSettings.speakerDiarizationModelPath.isNotEmpty()) stringResource(R.string.status_downloaded) else stringResource(R.string.status_not_downloaded)
+        Text(stringResource(R.string.diarization_model_status_prefix, diarizationStatusText), modifier = Modifier.padding(top = 8.dp))
+        if (diarizationDownloadStatus is ModelDownloadManager.DownloadStatus.Progress) {
+             LinearProgressIndicator(progress = diarizationDownloadStatus.progress, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
+        } else if (diarizationDownloadStatus is ModelDownloadManager.DownloadStatus.Completed) {
+             Text(stringResource(R.string.msg_download_complete), color = androidx.compose.ui.graphics.Color.Green)
+        }
+
+        Button(
+            onClick = onDownloadDiarization,
+            enabled = diarizationDownloadStatus !is ModelDownloadManager.DownloadStatus.Progress,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+        ) {
+            Text(stringResource(R.string.btn_download_diarization))
+        }
+
+        // Punctuation Download
+        val punctStatusText = if (currentSettings.punctuationModelPath.isNotEmpty()) stringResource(R.string.status_downloaded) else stringResource(R.string.status_not_downloaded)
+        Text(stringResource(R.string.punct_model_status_prefix, punctStatusText), modifier = Modifier.padding(top = 8.dp))
+        if (punctuationDownloadStatus is ModelDownloadManager.DownloadStatus.Progress) {
+             LinearProgressIndicator(progress = punctuationDownloadStatus.progress, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
+        } else if (punctuationDownloadStatus is ModelDownloadManager.DownloadStatus.Completed) {
+             Text(stringResource(R.string.msg_download_complete), color = androidx.compose.ui.graphics.Color.Green)
+        }
+
+        Button(
+            onClick = onDownloadPunctuation,
+            enabled = punctuationDownloadStatus !is ModelDownloadManager.DownloadStatus.Progress,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+        ) {
+            Text(stringResource(R.string.btn_download_punctuation))
+        }
         
         Button(
             onClick = {
@@ -177,7 +229,8 @@ fun SettingsScreen(
                         llmModel = currentModel,
                         llmProvider = selectedProvider,
                         systemPrompt = systemPrompt,
-                        llmTimeoutSeconds = timeoutText.toLongOrNull() ?: 60
+                        llmTimeoutSeconds = timeoutText.toLongOrNull() ?: 60,
+                        sttEndpointTimeout = endpointTimeout
                     )
                 )
             },

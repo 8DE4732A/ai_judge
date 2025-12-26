@@ -1,9 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- Gavel Head -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M53.98,24.3l8.69,-8.69c1.93,-1.93 5.07,-1.93 7,0c1.93,1.93 1.93,5.07 0,7l-5.64,5.64c6.31,2.96 11.23,8.4 13.04,15.15H31.02c1.81,-6.75 6.74,-12.19 13.04,-15.15L38.42,22.6c-1.93,-1.93 -1.93,-5.07 0,-7c1.93,-1.93 5.07,-1.93 7,0l8.56,8.56v0.14zM22.06,43.4H86.03v29.12c0,11.75 -9.56,21.31 -21.31,21.31H43.37c-11.75,0 -21.31,-9.56 -21.31,-21.31V43.4z" />
+        android:pathData="M8,17h12v2H8z M5.2,8.1L8.1,5.2L22.2,19.4L19.4,22.2L5.2,8.1z M12.3,1l5.7,5.7l-2.8,2.8l-5.7-5.7L12.3,1z M3.8,9.5l5.7,5.7l-2.8,2.8l-5.7-5.7L3.8,9.5z" />
+        
 </vector>

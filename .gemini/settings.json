@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "deepwiki": {
+      "httpUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "exa": {
+      "httpUrl": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check&exaApiKey=0c7791ff-4800-44b9-afd5-e4276f5916fa"
+    }
+  }
+}

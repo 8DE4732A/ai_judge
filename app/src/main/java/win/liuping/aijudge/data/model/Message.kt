@@ -4,7 +4,8 @@ data class Message(
     val id: String,
     val sender: Sender,
     val content: String,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val speakerName: String? = null // e.g. "Speaker 1", "Speaker 2"
 )
 
 enum class Sender {

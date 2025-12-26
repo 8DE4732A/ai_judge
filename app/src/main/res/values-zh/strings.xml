@@ -7,6 +7,10 @@
     <string name="btn_stop">停止</string>
     <string name="btn_listen">开始监听</string>
     <string name="btn_judge">判官</string>
+    <string name="btn_organize">整理</string>
+    <string name="cd_organize">整理会议</string>
+    <string name="dialog_title_minutes">会议纪要</string>
+    <string name="btn_close">关闭</string>
     
     <!-- Settings Screen -->
     <string name="llm_settings_header">LLM 设置</string>
@@ -17,16 +21,24 @@
     <string name="label_model_name">模型名称</string>
     <string name="label_system_prompt">系统提示词</string>
     <string name="label_timeout_seconds">超时时间 (秒)</string>
+    <string name="label_stt_endpoint_timeout">语音断句时间: %.1f秒</string>
     
     <string name="speech_models_header">语音模型</string>
     <string name="stt_model_status_prefix">STT 模型: %s</string>
     <string name="tts_model_status_prefix">TTS 模型: %s</string>
+    <string name="diarization_model_status_prefix">声纹模型: %s</string>
+    <string name="punct_model_status_prefix">标点模型: %s</string>
     <string name="status_downloaded">已下载</string>
     <string name="status_not_downloaded">未下载</string>
+    <string name="status_loading">加载中...</string>
+    <string name="status_loaded">已加载</string>
+    <string name="status_failed">加载失败</string>
     <string name="msg_download_complete">下载完成!</string>
     
     <string name="btn_download_stt">下载 STT 模型</string>
     <string name="btn_download_tts">下载 TTS 模型</string>
+    <string name="btn_download_diarization">下载声纹模型</string>
+    <string name="btn_download_punctuation">下载标点模型</string>
     <string name="btn_save_settings">保存设置</string>
     
     <!-- ViewModel Messages -->
@@ -34,4 +46,19 @@
     <string name="msg_stt_not_ready">STT 模型未就绪。请检查设置。</string>
     <string name="msg_listening_started">开始监听...</string>
     <string name="msg_listening_stopped">停止监听。</string>
+
+    <!-- Session Management -->
+    <string name="session_new">新建会话</string>
+    <string name="session_list_title">会话列表</string>
+    <string name="session_delete">删除</string>
+    <string name="session_delete_confirm">确定删除此会话？</string>
+    <string name="session_empty">暂无会话</string>
+    <string name="session_untitled">未命名会话</string>
+
+    <!-- Speaker Aliases -->
+    <string name="speaker_aliases_title">说话人别名</string>
+    <string name="speaker_alias_hint">输入 %s 的别名</string>
+    <string name="speaker_no_speakers">暂无识别到的说话人</string>
+    <string name="btn_done">完成</string>
+    <string name="btn_cancel">取消</string>
 </resources>
