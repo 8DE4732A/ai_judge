@@ -25,6 +25,7 @@ class SettingsRepository(context: Context) {
             putString("systemPrompt", settings.systemPrompt)
             putString("llmProvider", settings.llmProvider.name)
             putLong("llmTimeoutSeconds", settings.llmTimeoutSeconds)
+            putFloat("sttEndpointTimeout", settings.sttEndpointTimeout)
         }
     }
 
